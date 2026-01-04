@@ -1,7 +1,13 @@
-import React from "react";
+import React, { useState } from "react";
 import logo from "../../assets/images/logo.svg";
 import { NavLink } from "react-router";
+import { RiMenu4Line } from "react-icons/ri";
+import { RxCross1 } from "react-icons/rx";
 const Navbar = () => {
+  const [openMenu, setOpenMenu] = useState(false);
+  const handleMobileMenu = () => {
+    setOpenMenu((prv) => !prv);
+  };
   const navItems = [
     { label: "Collection", path: "/collection", className: "hover:text-black" },
     { label: "Men", path: "/men", className: "hover:text-black" },
@@ -13,8 +19,11 @@ const Navbar = () => {
   return (
     <div className="navbar justify-between rounded-2xl bg-base-100 shadow-sm">
       <div className="flex items-center gap-6 justify-between">
+        <button onClick={handleMobileMenu} className="md:hidden">
+          {openMenu ? <RxCross1 /> : <RiMenu4Line />}
+        </button>
         <img src={logo} />
-        <div>
+        <div className="hidden md:block">
           <ul className="flex items-center text-gray-600 justify-center gap-2">
             {navItems.map((nav) => (
               <li key={nav.label}>
@@ -26,8 +35,15 @@ const Navbar = () => {
           </ul>
         </div>
       </div>
-      <div className="absolute bg-green-500 min-h-screen left-0 mt-16 text-white w-64 top-0 ">
-        <ul className="flex  items-center justify-center flex-col gap-2">
+
+      <div
+        className={`absolute transition-all md:hidden duration-300 ease-in-out  min-h-[calc(100vh-90px)] left-0 mt-16 border-2  w-64 top-0 ${
+          openMenu
+            ? "translate-y-0 opacity-100 pointer-events-auto"
+            : "-translate-y-full opacity-0 pointer-events-none"
+        }  `}
+      >
+        <ul className="flex m-4 flex-col gap-2">
           {navItems.map((nav) => (
             <li key={nav.label}>
               <NavLink className={`${nav.className} `} to={nav.path}>
@@ -37,6 +53,7 @@ const Navbar = () => {
           ))}
         </ul>
       </div>
+
       <div className="flex-none justify-end">
         <div className="dropdown gap-7 dropdown-end">
           <div tabIndex={0} role="button" className="btn btn-ghost btn-circle">
