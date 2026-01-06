@@ -5,13 +5,22 @@ import thumbnail3 from "../../assets/images/image-product-3.jpg";
 import thumbnail4 from "../../assets/images/image-product-4.jpg";
 
 const Hero = () => {
-  const thumbnails = [
-    { id: 1, image: thumbnail1 },
-    { id: 2, image: thumbnail2 },
-    { id: 3, image: thumbnail3 },
-    { id: 4, image: thumbnail4 },
+  const products = [
+    {
+      id: 1,
+      title:
+        "Stylish Running Sports Sneakers Casual Lace-Up Shoes For Winter And Summer",
+      description:
+        "Stylish Running Sports Sneakers Casual Lace-Up Shoes For Winter And Summer - Stay Fashionable And Comfortable Year-Round With These Men's Shoes",
+      type: "Shoe",
+      model: "adidas",
+      price: 4000,
+      oldPrice: 5000,
+      images: [thumbnail1, thumbnail2, thumbnail3, thumbnail4],
+    },
   ];
-  const [mainImage, setMainImage] = useState(thumbnails[0].image);
+
+  const [mainImage, setMainImage] = useState(products[0].images[0]);
   const [quantity, setQuantity] = useState(1);
   const handleIncresePrice = () => setQuantity((prv) => prv + 1);
   const handleDecresePrice = () => setQuantity((prv) => Math.max(1, prv - 1));
@@ -34,18 +43,18 @@ const Hero = () => {
           {/* ===== Left: Image Gallery ===== */}
           <div className="flex flex-col-reverse">
             <div className="flex  ">
-              {thumbnails?.map((img, idx) => (
+              {products[0].images?.map((img, idx) => (
                 <button
                   key={idx}
-                  onClick={() => setMainImage(img.image)}
+                  onClick={() => setMainImage(img)}
                   className={` relative m-3 rounded-lg cursor-pointer overflow-hidden border transition ${
-                    mainImage === img.image
+                    mainImage === img
                       ? "border-secondary ring-2 ring-secondary"
                       : "border-gray-300 hover:border-secondary"
                   }`}
                 >
                   <img
-                    src={img.image}
+                    src={img}
                     // alt={`thumb-${idx}`}
 
                     className="object-cover"
@@ -67,10 +76,7 @@ const Hero = () => {
 
           {/* ===== Right: Product Info ===== */}
           <div>
-            <h2 className="text-3xl font-semibold mb-2">
-              Stylish Running Sports Sneakers Casual Lace-Up Shoes For Winter
-              And Summer
-            </h2>
+            <h2 className="text-3xl font-semibold mb-2">{products.title}</h2>
 
             {/* Price */}
             <div className="flex items-center gap-3 mt-3">
